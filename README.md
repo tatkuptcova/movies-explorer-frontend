@@ -1,1 +1,1 @@
-# movies-explorer-frontend
+# Фронтенд Дипломного проекта
