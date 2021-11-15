@@ -1,6 +1,7 @@
 import "./Profile.css";
 
 function Profile() {
+
   return (
     <section className='profile'>
       <h1 className='profile__title'>Привет, Татьяна!</h1>
