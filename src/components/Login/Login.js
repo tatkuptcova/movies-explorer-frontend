@@ -8,8 +8,8 @@ function Login() {
       title='Рады видеть!'
       submit='Войти'
       fields={[
-        { name: "E-mail", placeholder: "Введите ", type: "email" },
-        { name: "Пароль", placeholder: "Введи", type: "password" },
+        { name: "E-mail", placeholder: "Введите email", type: "email" },
+        { name: "Пароль", placeholder: "Введите пароль", type: "password" },
       ]}
     >
       <Link className='signform__link' to='/signup'>

@@ -9,8 +9,8 @@ function Register() {
       submit='Зарегистрироваться'
       fields={[
         { name: "Имя", placeholder: "Введите имя", type: "text", invalid: true },
-        { name: "E-mail", placeholder: "Введите ", type: "email" },
-        { name: "Пароль", placeholder: "Введи", type: "password" },
+        { name: "E-mail", placeholder: "Введите email ", type: "email" },
+        { name: "Пароль", placeholder: "Введите пароль", type: "password" },
       ]}
     >
       <Link className='signform__link' to='/signin'>

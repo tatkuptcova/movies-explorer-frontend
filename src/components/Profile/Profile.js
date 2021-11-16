@@ -11,7 +11,14 @@ function Profile() {
             <label className='profile__label' htmlFor='name'>
               Имя
             </label>
-            <input className='profile__input' type='text' name='name' id='name' placeholder='Имя' value='Татьяна' />
+            <input 
+              className='profile__input' 
+              type='text' 
+              name='name' 
+              id='name' 
+              placeholder='Имя' 
+              value='Татьяна' 
+            />
           </div>
           <div className='profile__field'>
             <label className='profile__label' htmlFor='email'>
