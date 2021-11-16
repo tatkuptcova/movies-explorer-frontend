@@ -5,6 +5,7 @@ function AboutMe() {
   return (
     <section className='about-me'  id='aboutMe'>
       <h2 className='section__title'>Студент</h2>
+      <hr />
       <img className='about-me__image' alt='Фото студента' src={image} />
       <div className='about-me__info'>
         <h3 className='about-me__title'>Татьяна</h3>
