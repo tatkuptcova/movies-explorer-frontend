@@ -48,10 +48,12 @@
     background-color: black;
     transition-duration: 0.25s;
   }
+
   .menu__btn > span::before {
     content: "";
     top: -8px;
   }
+
   .menu__btn > span::after {
     content: "";
     top: 8px;
@@ -106,7 +108,7 @@
   }
   
   .menu__item:hover {
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid black;
   }
   
   @media screen and (max-width: 380px) {
