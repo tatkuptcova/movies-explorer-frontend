@@ -83,7 +83,7 @@
 }
 
 .search__toggle:checked + .search__toggle-label {
-    background: #2be080;
+    background: #2BE080;
 }
 
 .search__toggle:checked + .search__toggle-label:after {

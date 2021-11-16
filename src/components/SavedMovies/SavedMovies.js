@@ -5,26 +5,26 @@ import MoviesList from "../MoviesList/MoviesList";
 const testData = [
   {
     cover:
-      "https://images.unsplash.com/photo-1623265041991-b7faf5bd163c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-    title: "Доминирующий рыжий",
+      "https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/651dca43-c7c8-41c1-b0e6-2c677f4733ef/600x900",
+    title: "Если что-то случится, я люблю вас",
     like: true,
-    duration: 22,
+    duration: 12,
   },
 
   {
     cover:
-      "https://images.unsplash.com/photo-1623265041991-b7faf5bd163c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-    title: "Доминирующий рыжий",
+      "https://upload.wikimedia.org/wikipedia/ru/2/27/Baoposter.jpg",
+    title: "Бао",
     like: true,
-    duration: 104,
+    duration: 8,
   },
 
   {
     cover:
-      "https://images.unsplash.com/photo-1623265041991-b7faf5bd163c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-    title: "Доминирующий рыжий",
+      "https://avatars.mds.yandex.net/get-ott/224348/2a00000162251916ca202d6a4216b799a90b/678x380",
+    title: "Дом",
     like: true,
-    duration: 2234,
+    duration: 93,
   },
 ];
 

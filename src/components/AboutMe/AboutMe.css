@@ -108,6 +108,10 @@
   letter-spacing: 0px;
 }
 
+.about-me__social-link:hover {
+  border-bottom: 1px solid black;
+}
+
 .about-me__social-link a {
   text-decoration-line: none;
   color: black;
