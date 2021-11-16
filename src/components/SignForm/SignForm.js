@@ -1,7 +1,7 @@
 import "./SignForm.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
- 
+
 function SignForm(props) {
   return (
     <section className='signform'>
@@ -21,7 +21,8 @@ function SignForm(props) {
                 type={field.type}
                 required
                 placeholder={field.placeholder}
-              ></input>
+              >
+              </input>
               <div style={field.invalid && { visibility: "visible" }} className='signform__info'>
                 Что-то пошло не так...
               </div>

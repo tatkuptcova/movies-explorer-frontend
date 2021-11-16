@@ -14,8 +14,7 @@ import UserContext from "../../context/userContext";
 import "./App.css";
 
 function App() {
-  //const [loggedIn] = useState(true)
-
+  
   const [currentUser, setCurrentUser] = useState(null);
   function debugUserSet(state) {
     setCurrentUser(state);
