@@ -102,4 +102,8 @@
         max-width: 100%;
         margin: auto;
     }
+
+    .signform__logo {
+        padding: 0px 121px 10px;
+    }
 }
