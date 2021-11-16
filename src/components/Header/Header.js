@@ -4,17 +4,18 @@ import Navigation from "../Navigation/Navigation";
 import logoImage from "../../images/logo.svg";
 import UserContext from "../../context/userContext";
 import useWindowSize from "../../utils/useWindowWidth";
-import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import Menu from "../Menu/Menu";
 import UserLink from "../UserLink/UserLink";
 
 import { Link, useLocation } from "react-router-dom";
 
 import "./Header.css";
+
 function Header() {
-  const { width } = useWindowSize();
   const user = useContext(UserContext);
   const curRoute = useLocation().pathname;
-  
+  const { width } = useWindowSize();
+
   if (curRoute === "/movies" || curRoute === "/saved-movies" || curRoute === "/" || curRoute === "/profile") {
     if (width <= 768) {
       return (
@@ -23,7 +24,7 @@ function Header() {
             <img className='header__logo' src={logoImage} alt='Логотип' />
           </Link>
           {user ? (
-            <BurgerMenu />
+            <Menu />
           ) : (
             <span>
               <Link className='header__signup' to='/signup'>
@@ -60,4 +61,5 @@ function Header() {
     );
   } else return "";
 }
+
 export default Header;
