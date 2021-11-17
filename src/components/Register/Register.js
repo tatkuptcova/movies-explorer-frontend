@@ -5,7 +5,7 @@ function Register() {
   return (
     <SignForm
       class='signup'
-      title='Добро пожаловать'
+      title='Добро пожаловать!'
       submit='Зарегистрироваться'
       fields={[
         { name: "Имя", placeholder: "Введите имя", type: "text"},

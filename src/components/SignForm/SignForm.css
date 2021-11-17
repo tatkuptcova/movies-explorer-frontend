@@ -106,4 +106,13 @@
     .signform__logo {
         padding: 0px 121px 10px;
     }
+
+    .signform__title {
+        margin-top: 40px;
+        padding: 0px 22px 66px 35px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0;
+    }
 }
