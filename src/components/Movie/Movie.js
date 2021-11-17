@@ -11,12 +11,14 @@ function Movie(props) {
   return (
     <div className='movie'>
       <img className='movie__cover' src={cover} alt={`Обложка ${title}`} />
-      <p className='movie__title'>{title}</p>
-      {props.mode === "delete" ? (
-        <button className='movie__button movie__button_delete' />
-      ) : (
-        <button className={`movie__button movie__button_like ${like ? "movie__button_liked" : ""}`} />
-      )}
+      <div className='movie__info'>
+        <p className='movie__title'>{title}</p>
+        {props.mode === "delete" ? (
+          <button className='movie__button movie__button_delete' />
+        ) : (
+          <button className={`movie__button movie__button_like ${like ? "movie__button_liked" : ""}`} />
+        )}
+      </div>
       <p className='movie__duration'>{calculateDuration(duration)}</p>
     </div>
   );
