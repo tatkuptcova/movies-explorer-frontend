@@ -1,32 +1,23 @@
-.register {
+.login {
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
 }
 
-.register__container {
+.login__container {
   width: 100%;
   max-width: 396px;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
-.register__form {
-  display: flex;
-  flex-direction: column;
-  margin: 40px auto 0;
-  max-width: 396px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.register__logo {
+.login__logo {
   margin: 70px 0 40px;
   width: 38px;
   height: 38px;
 }
 
-.register__title {
+.login__title {
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -35,7 +26,7 @@
   margin: 0;
 }
 
-.register__subtitle {
+.login__subtitle {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -45,7 +36,7 @@
   margin: 16px 0 0;
 }
 
-.register__input-label {
+.login__input-label {
   display: block;
   color: #8b8b8b;
   font-style: normal;
@@ -54,7 +45,7 @@
   line-height: 12px;
 }
 
-.register__input {
+.login__input {
   position: relative;
   border: none;
   outline: none;
@@ -67,16 +58,11 @@
   padding: 0 0 10px 0;
 }
 
-.register__input_color-red {
+.login__input_color-red {
   color: #ee3465;
 }
 
-.register__input:last-of-type {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-.register__input-error {
+.login__input-error {
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
@@ -85,14 +71,21 @@
   margin: 6px 0 24px;
 }
 
-.register__input:last-of-type {
+.login__input:last-of-type {
   margin-bottom: 0;
   margin-top: 0;
-  box-shadow: inset 0 0 0 50px inherit;
-  -webkit-text-fill-color: inherit;
 }
 
-.register__button {
+.login__form {
+  display: flex;
+  flex-direction: column;
+  margin: 40px auto 0;
+  max-width: 396px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login__button {
   background: #2439F0;
   border-radius: 3px;
   margin-top: 221px;
@@ -110,30 +103,30 @@
   padding: 0;
 }
 
-.register__button:hover {
-  opacity: 0.8;
+.login__button:hover {
+opacity: .8;
 }
 
-.register__link {
+.login__link {
   text-decoration: none;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  color: #4285f4;
+  color: #2439F0;
   margin-left: 6px;
 }
 
-.register__link:hover {
-  opacity: 0.7;
-}
+.login__link:hover {
+  opacity: .7;
+  }
 
-.register__img-link:hover {
+.login__img-link:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 445px) {
-  .register__container {
+  .login__container {
     max-width: 260px;
     display: flex;
     flex-direction: column;
@@ -141,38 +134,38 @@
 }
 
 @media screen and (max-width: 445px) {
-  .register__img-link {
+  .login__img-link {
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 445px) {
-  .register__logo {
+  .login__logo {
     margin: 56px 0 50px;
   }
 }
 
 @media screen and (max-width: 445px) {
-  .register__title {
+  .login__title {
     text-align: center;
   }
 }
 
 @media screen and (max-width: 445px) {
-  .register__form {
+  .login__form {
     margin-top: 80px;
   }
 }
 
 @media screen and (max-width: 445px) {
-  .register__subtitle {
+  .login__subtitle {
     font-size: 12px;
     line-height: 15px;
   }
 }
 
 @media screen and (max-width: 445px) {
-  .register__link {
+  .login__link {
     font-size: 12px;
     line-height: 15px;
   }
