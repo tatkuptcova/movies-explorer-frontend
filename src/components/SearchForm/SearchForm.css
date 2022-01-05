@@ -153,6 +153,13 @@ input:checked + .slider:before {
   -ms-transform: translateX(18px);
   transform: translateX(18px);
 }
+/* 
+input:internal-autofill-selected {
+  appearance: menulist-button;
+  background-image: none !important;
+  background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+  color: -internal-light-dark(black, white) !important;
+} */
 
 .slider.round {
   border-radius: 34px;

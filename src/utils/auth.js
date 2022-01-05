@@ -1,5 +1,5 @@
-const BASE_URL = 'http://localhost:3000';
-// const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club';
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club';
 const headers = { 'Content-Type': 'application/json' };
 
 function getResponseData(res) {
