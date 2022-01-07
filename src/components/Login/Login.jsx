@@ -34,6 +34,7 @@ function Login({ onLogin }) {
             className="login__input"
             type="email"
             id="login-input-email"
+            placeholder="Ваш E-mail"
             {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
             required
           />
@@ -48,6 +49,7 @@ function Login({ onLogin }) {
             className="login__input login__input_color-red"
             type="password"
             id="login-input-password"
+            placeholder="Введите пароль"
             {...register('password', { required: true })}
           />
           <p className="login__input-error">
