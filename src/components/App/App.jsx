@@ -22,6 +22,7 @@ import {
 import * as auth from '../../utils/auth';
 import { api } from '../../utils/MainApi';
 import { getBeatMoviesFromApi } from '../../utils/MoviesApi';
+
 function App() {
   const location = useLocation();
   const history = useHistory();
@@ -44,6 +45,7 @@ function App() {
   const [isSearching, setIsSearching] = React.useState(false);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [savedMovieIds, setSavedMovieIds] = React.useState([]);
+
   React.useEffect(() => {
     if (isLoggedIn) {
       api
@@ -54,12 +56,15 @@ function App() {
         .catch((err) => console.log(err));
     }
   }, [isLoggedIn]);
+ 
   function openMobileMenu() {
     SetIsMobileMenuOpen(true);
   }
+ 
   function closeMobileMenu() {
     SetIsMobileMenuOpen(false);
   }
+ 
   function onRegister(data) {
     const { name, email, password } = data;
     auth
@@ -76,6 +81,7 @@ function App() {
         }
       });
   }
+ 
   function onLogin(email, password) {
     auth
       .getLogin(email, password)
@@ -94,6 +100,7 @@ function App() {
         return console.log(err.status);
       });
   }
+ 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -140,6 +147,7 @@ function App() {
         console.log('Ира любит тебя!');
       });
   }
+
   React.useEffect(() => {
     getBeatMovies();
   }, []);
@@ -209,6 +217,7 @@ function App() {
       );
     }
   };
+  
   function handleMovieLikeDelete(movie) {
     api
       .deleteMovie(movie._id)

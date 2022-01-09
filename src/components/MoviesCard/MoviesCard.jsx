@@ -12,7 +12,6 @@ function MoviesCard({
   const location = useLocation();
   const { name = film.nameRU, duration, image, movieId } = film;
   const [isLiked, setIsLiked] = React.useState(false);
-  //const isFucked = savedMovieIds.some((i) => i === movieId);
   const like = savedMovies.find((c) => c.movieId === movieId);
   React.useEffect(() => {
     if (savedMovieIds && like) {

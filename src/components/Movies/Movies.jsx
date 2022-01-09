@@ -13,7 +13,9 @@ function Movies({
   savedMovieIds,
   savedMovies,
   onDeleteClick,
-}) {
+}) 
+
+{
   return (
     <div className="movies">
       <SearchForm getSearchMovies={getSearchMovies} />
