@@ -44,7 +44,6 @@ function Register({ onRegister, isAuthError }) {
             {...register('name', {
               required: true,
               minLength: 2,
-              maxLength: 12,
               pattern: /^[A-Za-zА-Яа-яё -]+$/,
             })}
             required
@@ -52,8 +51,6 @@ function Register({ onRegister, isAuthError }) {
           <p className="register__input-error">
             {errors.name?.type === 'required' && 'Это обязательное поле'}
             {errors.name?.type === 'minLength' && 'Минимальная длина 2 символа'}
-            {errors.name?.type === 'maxLength' &&
-              'максимальная длина 12 символов'}
             {errors.name?.type === 'pattern' && 'Неподходящее имя'}
           </p>
           <label

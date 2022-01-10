@@ -20,28 +20,7 @@ class Api {
     }).then(this._getResponseData);
   }
 
-  postNewCard(data, jwt) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-      body: JSON.stringify(data),
-    }).then(this._getResponseData);
-  }
-
-  getUserProfile() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-    }).then(this._getResponseData);
-  }
-
-  setUserProfile(data, jwt) {
+  updateProfile(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -64,7 +43,9 @@ class Api {
     nameRU,
     nameEN,
     thumbnail,
-  }) {
+  }) 
+  
+  {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       body: JSON.stringify({
@@ -94,17 +75,6 @@ class Api {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
       },
-    }).then(this._getResponseData);
-  }
-
-  setUserAvatar(avatar, jwt) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
-      body: JSON.stringify(avatar),
     }).then(this._getResponseData);
   }
 }

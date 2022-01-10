@@ -3,21 +3,28 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function SavedMovies({
-  savedMovies,
-  savedMovieIds,
-  onDeleteClick,
-  onCardClick,
-  isLoading,
-  getSearchMovies,
-  searchResultSavedArray,
-  isSearching,
-}) 
-
-{
+function SavedMovies(props) {
+  const {
+    savedMovies,
+    savedMovieIds,
+    onDeleteClick,
+    onCardClick,
+    isLoading,
+    getSearchMovies,
+    searchResultSavedArray,
+    isSearchingSaved,
+    isSearchSavedError,
+  } = props;
   return (
     <div className="saved-movies">
-      <SearchForm getSearchMovies={getSearchMovies}/>
+      <SearchForm getSearchMovies={getSearchMovies} isLoading={isLoading} />
+      {!searchResultSavedArray.length && isSearchingSaved && !isLoading ? (
+        <p className="saved-movies__error">
+          {isSearchSavedError ? isSearchSavedError : 'Ничего не найдено'}
+        </p>
+      ) : (
+        ''
+      )}
       {isLoading ? (
         <Preloader />
       ) : (
@@ -27,7 +34,7 @@ function SavedMovies({
           onDeleteClick={onDeleteClick}
           onCardClick={onCardClick}
           searchResultSavedArray={searchResultSavedArray}
-          isSearching={isSearching}
+          isSearchingSaved={isSearchingSaved}
         />
       )}
     </div>

@@ -22,30 +22,52 @@ import {
 import * as auth from '../../utils/auth';
 import { api } from '../../utils/MainApi';
 import { getBeatMoviesFromApi } from '../../utils/MoviesApi';
+import {
+  SHORTMOVIETIME,
+  HEADERLOCATION,
+  FOOTERLOCATION,
+  ERROR409,
+  ERROR401,
+  CARDDELETED,
+  REQUESTERROR,
+  DUBLICATEEMAIL,
+  SERVERERROR,
+  AUTHERROR,
+  DEFAULTRAILER,
+  DEFAULTIMAGE
+} from '../../utils/config';
 
 function App() {
   const location = useLocation();
   const history = useHistory();
-  const headerLocation = ['/', '/movies', '/saved-movies', '/profile'];
-  const footerLocation = ['/', '/movies', '/saved-movies'];
-  const shouldShowHeader = headerLocation.some(
+
+  const shouldShowHeader = HEADERLOCATION.some(
     (item) => location.pathname === item
   );
-  const shouldShowFooter = footerLocation.some(
+  const shouldShowFooter = FOOTERLOCATION.some(
     (item) => location.pathname === item
   );
+
   const [isMobileMenuOpen, SetIsMobileMenuOpen] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isAuthError, setIsAuthError] = React.useState(String);
+  const [isRegisterError, setIsRegisterError] = React.useState('');
+  const [isLoginError, setIsLoginError] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [beatFilmsArray, setBeatFilmsArray] = React.useState([]);
   const [searchResultArray, setSearchResultArray] = React.useState([]);
-  const [searchResultSavedArray, setSearchResultSavedArray] = React.useState([]);
+  const [searchResultSavedArray, setSearchResultSavedArray] = React.useState(
+    []
+  );
   const [isSearching, setIsSearching] = React.useState(false);
+  const [isSearchingSaved, setIsSearchingSaved] = React.useState(false);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [savedMovieIds, setSavedMovieIds] = React.useState([]);
+  const [isSearchError, setIsSearchError] = React.useState('');
+  const [isSearchSavedError, setIsSearchSavedError] = React.useState('');
 
+  const [isUpdateProfileError, setIsUpdateProfileError] = React.useState('');
+  const [isValidRegister, setIsValidRegister] = React.useState(true);
   React.useEffect(() => {
     if (isLoggedIn) {
       api
@@ -53,20 +75,23 @@ function App() {
         .then((data) => {
           setSavedMovies(data.reverse());
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setIsSearchSavedError(REQUESTERROR);
+          console.log(err);
+        });
     }
   }, [isLoggedIn]);
- 
+
   function openMobileMenu() {
     SetIsMobileMenuOpen(true);
   }
- 
   function closeMobileMenu() {
     SetIsMobileMenuOpen(false);
   }
- 
+
   function onRegister(data) {
     const { name, email, password } = data;
+    setIsValidRegister(false);
     auth
       .getRegister(name, email, password)
       .then((res) => {
@@ -74,15 +99,17 @@ function App() {
           onLogin(email, password);
         }
       })
+      .then(() => setIsValidRegister(true))
       .catch((err) => {
         console.log(err);
-        if (err === 'Error: 409') {
-          setIsAuthError('Пользователь с таким email уже существует');
-        }
+        if (err === ERROR409) {
+          setIsRegisterError(DUBLICATEEMAIL);
+        } else setIsRegisterError(SERVERERROR);
       });
   }
- 
+
   function onLogin(email, password) {
+    getBeatMovies();
     auth
       .getLogin(email, password)
       .then((res) => {
@@ -91,16 +118,13 @@ function App() {
         history.push('/movies');
       })
       .catch((err) => {
-        console.log(err);
-        if (err.status === 400) {
-          return console.log('не передано одно из полей');
-        } else if (err.status === 401) {
-          return console.log('пользователь с email не найден');
+        if (err === ERROR401) {
+          setIsLoginError(AUTHERROR);
         }
-        return console.log(err.status);
+        console.log(err);
       });
   }
- 
+  
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -113,75 +137,108 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log(err.status);
-          if (err.status === 401) {
-            return console.log('Переданный токен некорректен ');
+          console.log(err);
+          if (err === ERROR401) {
+            console.log('Переданный токен некорректен ');
           } else if (!jwt) {
-            return console.log('Токен не передан или передан не в том формате');
+            console.log('Токен не передан или передан не в том формате');
           }
-          return console.log('error 500');
+          console.log('error 500');
         });
     }
-  }, [isLoggedIn]);
-
-  function getBeatMovies() {
-    getBeatMoviesFromApi()
-      .then((data) => {
-        console.log(data);
-        const moviesArray = data.map((item) => {
-          return {
-            ...item,
-            nameRU: item.nameRU,
-            nameEN: item.nameEN ? item.nameEN : item.nameRU,
-            image: `https://api.nomoreparties.co${item.image.url}`,
-            trailer: item.trailerLink,
-            thumbnail: `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
-            movieId: item.id,
-            like: false,
-          };
-        });
-        setBeatFilmsArray(moviesArray);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        console.log('Ира любит тебя!');
-      });
-  }
+  }, []);
 
   React.useEffect(() => {
     getBeatMovies();
   }, []);
 
-  function getSearchResult(keyword, array, setArray) {
-    setIsLoading(true);
-    setIsSearching(true);
-    const word = keyword.search.toLowerCase();
+  function getBeatMovies() {
+    getBeatMoviesFromApi()
+      .then((data) => {
+        const pattern = /^http[s]?:\/\/\w+/;
+        const moviesArray = data.map((item) => {
+          return {
+            ...item,
+            nameRU: item.nameRU,
+            nameEN: item.nameEN ? item.nameEN : item.nameRU,
+            image: `${DEFAULTIMAGE}${item.image.url}`,
+            trailer:
+              item.trailerLink === null || !pattern.test(item.trailerLink)
+                ? DEFAULTRAILER
+                : item.trailerLink,
+            thumbnail: `${DEFAULTIMAGE}${item.image.formats.thumbnail.url}`,
+            movieId: item.id,
+          };
+        });
+        setBeatFilmsArray(moviesArray);
+      })
+      .catch((err) => {
+        setIsSearchError(REQUESTERROR);
+        console.log(err);
+      });
+  }
 
+  function getSearchResult(data, array, setArray) {
+    setIsLoading(true);
+
+    if (array === beatFilmsArray) {
+      setIsSearching(true);
+    } else if (array === savedMovies) {
+      setIsSearchingSaved(true);
+    }
+
+    const checkbox = data.checkbox;
+    const keyword = data.search.toLowerCase();
     const res = array.filter((el) => {
       const nameRU = el.nameRU.toLowerCase();
       const nameEN = el.nameEN.toLowerCase();
-      const description = el.description.toLowerCase();
-      return (
-        nameRU.includes(word) ||
-        nameEN.includes(word) ||
-        description.includes(word)
-      );
+
+      return nameRU.includes(keyword) || nameEN.includes(keyword);
     });
-    setArray(res);
-    setTimeout(function doSomething() {
+
+    if (checkbox) {
+      const shortMoviesResult = res.filter(
+        (item) => item.duration <= SHORTMOVIETIME
+      );
+      setResult(setArray, shortMoviesResult);
+    } else {
+      setResult(setArray, res);
+    }
+
+    setTimeout(function stopPreloader() {
       setIsLoading(false);
     }, 2000);
   }
-
-  function handleSearch(keyword, path) {
-    if (path === '/movies') {
-      getSearchResult(keyword, beatFilmsArray, setSearchResultArray);
-    }
-    if (path === '/saved-movies') {
-      getSearchResult(keyword, savedMovies, setSearchResultSavedArray);
+  
+  function setResult(setState, array) {
+    if (setState === setSearchResultArray) {
+      setState(array);
+      localStorage.setItem('searchResultArray', JSON.stringify(array));
+    } else if (setState === setSearchResultSavedArray) {
+      setState(array);
     }
   }
 
+  function handleSearch(data, path) {
+    if (path === '/movies') {
+      getSearchResult(data, beatFilmsArray, setSearchResultArray);
+    }
+    if (path === '/saved-movies') {
+      getSearchResult(data, savedMovies, setSearchResultSavedArray);
+    }
+  }
+  
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      const resultArray = JSON.parse(localStorage.getItem('searchResultArray'));
+      if (resultArray) {
+        setSearchResultArray(resultArray);
+        setIsSearching(true);
+      }
+    }
+  }, [isLoggedIn]);
+  
+  
   const handleMovieLike = (movie) => {
     const like = savedMovies.some((i) => i.movieId === movie.id);
     if (!like) {
@@ -191,7 +248,6 @@ function App() {
           setSavedMovies([newMovie, ...savedMovies]);
           setSavedMovieIds([...savedMovieIds, newMovie.movieId]);
         })
-
         .catch((err) => {
           console.log(err);
         });
@@ -200,8 +256,9 @@ function App() {
         i.movieId === movie.id
           ? api
               .deleteMovie(i._id)
+
               .then((movie) => {
-                if (movie.message === 'Карточка удалена') {
+                if (movie.message === CARDDELETED) {
                   setSavedMovies((state) =>
                     state.filter((item) => item.movieId !== i.movieId)
                   );
@@ -217,12 +274,12 @@ function App() {
       );
     }
   };
-  
+
   function handleMovieLikeDelete(movie) {
     api
       .deleteMovie(movie._id)
       .then((newMovie) => {
-        if (newMovie.message === 'Карточка удалена') {
+        if (newMovie.message === CARDDELETED) {
           setSavedMovies((state) =>
             state.filter((item) => item.movieId !== movie.movieId)
           );
@@ -234,6 +291,44 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function handleChangeProfile(data) {
+    api
+      .updateProfile(data)
+      .then((res) => {
+        if (res) {
+          setCurrentUser({ name: res.name, email: res.email });
+
+          setIsUpdateProfileError('Данные успешно сохранены');
+          setTimeout(() => {
+            setIsUpdateProfileError('');
+          }, 5000);
+        }
+      })
+      .catch((err) => {
+        if (err === ERROR409) {
+          setIsUpdateProfileError(DUBLICATEEMAIL);
+        }
+        console.log(err);
+      });
+  }
+
+  function handleLogOut() {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    history.push('/');
+    setCurrentUser({});
+    setSavedMovies([]);
+    setSavedMovieIds([]);
+    setBeatFilmsArray([]);
+    setSearchResultArray([]);
+    setSearchResultSavedArray([]);
+    setIsSearching(false);
+    setIsLoading(false);
+    setIsLoginError('');
+    setIsRegisterError('');
+    setIsUpdateProfileError('');
   }
 
   return (
@@ -251,13 +346,13 @@ function App() {
               path="/movies"
               component={Movies}
               isLoading={isLoading}
-              beatFilmsArray={beatFilmsArray}
               getSearchMovies={handleSearch}
               searchResultArray={searchResultArray}
               isSearching={isSearching}
               onCardClick={handleMovieLike}
               savedMovieIds={savedMovieIds}
               savedMovies={savedMovies}
+              isSearchError={isSearchError}
             />
             <ProtectedRoute
               path="/saved-movies"
@@ -269,19 +364,33 @@ function App() {
               isLoading={isLoading}
               getSearchMovies={handleSearch}
               searchResultSavedArray={searchResultSavedArray}
-              isSearching={isSearching}
+              isSearchingSaved={isSearchingSaved}
+              isSearchSavedError={isSearchSavedError}
             />
             <ProtectedRoute
               path="/profile"
               component={Profile}
               currentUser={currentUser}
+              onChangeProfile={handleChangeProfile}
+              onLogOut={handleLogOut}
+              isUpdateProfileError={isUpdateProfileError}
             />
-            <Route path="/signup">
-              <Register onRegister={onRegister} isAuthError={isAuthError} />
-            </Route>
-            <Route path="/signin">
-              <Login onLogin={onLogin} />
-            </Route>
+
+            {!isLoggedIn && (
+              <Route path="/signup">
+                <Register
+                  onRegister={onRegister}
+                  isRegisterError={isRegisterError}
+                  isValidRegister={isValidRegister}
+                />
+              </Route>
+            )}
+            {!isLoggedIn && (
+              <Route path="/signin">
+                <Login onLogin={onLogin} isLoginError={isLoginError} />
+              </Route>
+            )}
+
             <Route path="*">
               <PageNotFound />
             </Route>

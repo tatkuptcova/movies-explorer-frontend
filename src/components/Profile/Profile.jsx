@@ -2,44 +2,20 @@ import './Profile.css';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-function Profile(props) {
-  const { currentUser, onChangeProfile, onLogOut, isUpdateProfileError } =
-    props;
+function Profile({ currentUser, onChangeProfile }) {
   const { name, email } = currentUser;
-  const [isValidation, setValidation] = React.useState(false);
-
-  const form = useForm({ mode: 'onChange' });
-
+  const form = useForm( { mode: 'onChange' } );
   const {
-    watch,
     register,
     formState: { errors },
     handleSubmit,
   } = form;
   const { isValid } = form.formState;
-  const defaultValueName = watch('name');
-  const defaultValueEmail = watch('email');
-
-  React.useEffect(() => {
-    if (
-      (defaultValueName !== name && isValid) ||
-      (defaultValueEmail !== email && isValid)
-    ) {
-      setValidation(true);
-    } else {
-      setValidation(false);
-    }
-  }, [defaultValueName, defaultValueEmail, name, email, isValid, isValidation]);
 
   const onSubmit = (data) => {
-    setValidation(false);
-
-    onChangeProfile(data);
+    console.log(data);
+   // onChangeProfile(data);
   };
-
-  function handleLogOut() {
-    onLogOut();
-  }
 
   return (
     <div className="profile">
@@ -57,6 +33,7 @@ function Profile(props) {
               id="profile-name"
               className="profile__form-input"
               placeholder="Имя"
+              aria-invalid={errors.name ? "true" : "false"}
               defaultValue={name}
               {...register('name', {
                 required: true,
@@ -73,42 +50,34 @@ function Profile(props) {
               className="profile__form-input"
               placeholder="Почта"
               defaultValue={email}
-              {...register('email', {
-                required: true,
-                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              })}
+              {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
             />
+            <p className="register__input-error">
+              {errors.email?.type === 'required' && 'Это обязательное поле'}
+              {errors.email?.type === 'pattern' &&
+                'Почта должна соответствовать почте'}
+            </p>
           </div>
         </fieldset>
-        <p className="profile__form-errors">
-          {errors.name?.type === 'required' && 'Имя обязательное поле'}
+        <p className="register__input-error">
+          {errors.name?.type === 'required' && 'Это обязательное поле'}
           {errors.name?.type === 'minLength' && 'Минимальная длина 2 символа'}
         </p>
-        <p className="profile__form-errors">
-          {errors.email?.type === 'required' && 'Почта обязательное поле'}
-          {errors.email?.type === 'pattern' &&
-            'Почта должна соответствовать почте'}
-        </p>
-
-        <p className="profile__update-errors">{isUpdateProfileError}</p>
-
         <button
-          disabled={!isValidation}
+          disabled={!isValid}
           type="submit"
           className={`profile__form-button ${
-            !isValidation ? 'profile__form-button_disabled' : ''
+            !isValid ? 'profile__form-button_disabled' : ''
           }`}
         >
           Редактировать
         </button>
-        <button
-          type="button"
-          className="profile__form-button profile__form-button_red"
-          onClick={handleLogOut}
-        >
+        <button type="button" className="profile__form-button profile__form-button_red">
           Выйти из аккаунта
         </button>
+
       </form>
+
     </div>
   );
 }
