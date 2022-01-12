@@ -1,6 +1,7 @@
 import './MobileMenu.css';
 import React from 'react';
 import NavigationMobile from '../NavigationMobile/NavigationMobile';
+
 function MobileMenu({ isMobileMenuOpen, closeMobileMenu }) {
   return (
     <div

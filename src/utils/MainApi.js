@@ -2,7 +2,7 @@ class Api {
   constructor(apiOptions) {
     this._baseUrl = apiOptions.baseUrl;
   }
-  
+
   _getResponseData(res) {
     if (!res.ok) {
       return Promise.reject(`Error: ${res.status}`);
@@ -43,9 +43,7 @@ class Api {
     nameRU,
     nameEN,
     thumbnail,
-  }) 
-  
-  {
+  }) {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       body: JSON.stringify({

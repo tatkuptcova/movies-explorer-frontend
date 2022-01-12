@@ -7,13 +7,15 @@ function NavigationMobile({ closeMobileMenu }) {
       <button
         className="mobile-nav__btn-close"
         onClick={closeMobileMenu}
-      ></button>
+      >
+      </button>
       <div className="mobile-nav__items">
         <NavLink
           exact
           to="/"
           className="mobile-nav__item"
           activeClassName="mobile-nav__item_underline"
+          onClick={closeMobileMenu}
         >
           Главная
         </NavLink>
@@ -21,6 +23,7 @@ function NavigationMobile({ closeMobileMenu }) {
           to="/movies"
           className="mobile-nav__item"
           activeClassName="mobile-nav__item_underline"
+          onClick={closeMobileMenu}
         >
           Фильмы
         </NavLink>
@@ -28,12 +31,17 @@ function NavigationMobile({ closeMobileMenu }) {
           to="/saved-movies"
           className="mobile-nav__item"
           activeClassName="mobile-nav__item_underline"
+          onClick={closeMobileMenu}
         >
           Сохранённые фильмы
         </NavLink>
       </div>
 
-      <Link to="/profile" className="mobile-nav__item mobile-nav__item_profile">
+      <Link 
+        to="/profile" 
+        className="mobile-nav__item mobile-nav__item_profile"
+        onClick={closeMobileMenu}
+      >
         Аккаунт
       </Link>
     </div>

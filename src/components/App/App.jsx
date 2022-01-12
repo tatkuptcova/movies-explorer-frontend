@@ -93,7 +93,7 @@ function App() {
     const { name, email, password } = data;
     setIsValidRegister(false);
     auth
-      .getRegister(name, email, password)
+      .register(name, email, password)
       .then((res) => {
         if (res) {
           onLogin(email, password);
@@ -111,7 +111,7 @@ function App() {
   function onLogin(email, password) {
     getBeatMovies();
     auth
-      .getLogin(email, password)
+      .login(email, password)
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         setIsLoggedIn(true);
@@ -124,7 +124,6 @@ function App() {
         console.log(err);
       });
   }
-  
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -186,7 +185,6 @@ function App() {
     } else if (array === savedMovies) {
       setIsSearchingSaved(true);
     }
-
     const checkbox = data.checkbox;
     const keyword = data.search.toLowerCase();
     const res = array.filter((el) => {
@@ -209,7 +207,6 @@ function App() {
       setIsLoading(false);
     }, 2000);
   }
-  
   function setResult(setState, array) {
     if (setState === setSearchResultArray) {
       setState(array);
@@ -218,7 +215,6 @@ function App() {
       setState(array);
     }
   }
-
   function handleSearch(data, path) {
     if (path === '/movies') {
       getSearchResult(data, beatFilmsArray, setSearchResultArray);
@@ -227,7 +223,7 @@ function App() {
       getSearchResult(data, savedMovies, setSearchResultSavedArray);
     }
   }
-  
+  // PERSIST ++++++++++++++++++++++++++++++++++++
   React.useEffect(() => {
     if (isLoggedIn) {
       const resultArray = JSON.parse(localStorage.getItem('searchResultArray'));
@@ -237,8 +233,7 @@ function App() {
       }
     }
   }, [isLoggedIn]);
-  
-  
+  // PERSIST ++++++++++++++++++++++++++++++++++++
   const handleMovieLike = (movie) => {
     const like = savedMovies.some((i) => i.movieId === movie.id);
     if (!like) {
@@ -274,7 +269,6 @@ function App() {
       );
     }
   };
-
   function handleMovieLikeDelete(movie) {
     api
       .deleteMovie(movie._id)
@@ -292,7 +286,6 @@ function App() {
         console.log(err);
       });
   }
-
   function handleChangeProfile(data) {
     api
       .updateProfile(data)
@@ -313,7 +306,6 @@ function App() {
         console.log(err);
       });
   }
-
   function handleLogOut() {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -330,7 +322,6 @@ function App() {
     setIsRegisterError('');
     setIsUpdateProfileError('');
   }
-
   return (
     <div className="page">
       <div className="page__container">
