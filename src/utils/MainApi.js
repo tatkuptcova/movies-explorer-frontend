@@ -1,13 +1,23 @@
-class Api {
-  constructor(apiOptions) {
-    this._baseUrl = apiOptions.baseUrl;
+class MainApi {
+  constructor(baseUrl) {
+    this._baseUrl = baseUrl;
   }
 
-  _getResponseData(res) {
+  _getResponse(res) {
     if (!res.ok) {
       return Promise.reject(`Error: ${res.status}`);
     }
     return res.json();
+  }
+
+  getUserInfo() {
+    return fetch (`${this.baseUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    }).then(this._getResponse)
   }
 
   getSavedMovies() {
@@ -17,7 +27,7 @@ class Api {
         'Content-type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
-    }).then(this._getResponseData);
+    }).then(this._getResponse);
   }
 
   updateProfile(data) {
@@ -28,7 +38,7 @@ class Api {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
       body: JSON.stringify(data),
-    }).then(this._getResponseData);
+    }).then(this._getResponse);
   }
 
   saveMovie({
@@ -73,12 +83,11 @@ class Api {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
       },
-    }).then(this._getResponseData);
+    }).then(this._getResponse);
   }
 }
   
-export const api = new Api({
-  baseUrl: 'localhost://3000',
-  // 'https://domainname.tatkuptsov.nomoredomains.club',
+export const mainApi = new MainApi({
+  baseUrl:'https://domainname.tatkuptsov.nomoredomains.club',
 });
   

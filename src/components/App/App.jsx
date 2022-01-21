@@ -20,7 +20,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import * as auth from '../../utils/auth';
-import { api } from '../../utils/MainApi';
+import { mainApi } from '../../utils/MainApi';
 import { getBeatMoviesFromApi } from '../../utils/MoviesApi';
 import {
   SHORTMOVIETIME,
@@ -48,29 +48,27 @@ function App() {
     (item) => location.pathname === item
   );
 
+  const [searchResultSavedArray, setSearchResultSavedArray] = React.useState([]);
+  const [isUpdateProfileError, setIsUpdateProfileError] = React.useState('');
+  const [isSearchSavedError, setIsSearchSavedError] = React.useState('');
   const [isMobileMenuOpen, SetIsMobileMenuOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [isRegisterError, setIsRegisterError] = React.useState('');
-  const [isLoginError, setIsLoginError] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [beatFilmsArray, setBeatFilmsArray] = React.useState([]);
-  const [searchResultArray, setSearchResultArray] = React.useState([]);
-  const [searchResultSavedArray, setSearchResultSavedArray] = React.useState(
-    []
-  );
-  const [isSearching, setIsSearching] = React.useState(false);
   const [isSearchingSaved, setIsSearchingSaved] = React.useState(false);
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [searchResultArray, setSearchResultArray] = React.useState([]);
+  const [isValidRegister, setIsValidRegister] = React.useState(true);
+  const [isRegisterError, setIsRegisterError] = React.useState('');
+  const [beatFilmsArray, setBeatFilmsArray] = React.useState([]);
+  const [isLoginError, setIsLoginError] = React.useState('');
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isSearching, setIsSearching] = React.useState(false);
   const [savedMovieIds, setSavedMovieIds] = React.useState([]);
   const [isSearchError, setIsSearchError] = React.useState('');
-  const [isSearchSavedError, setIsSearchSavedError] = React.useState('');
-
-  const [isUpdateProfileError, setIsUpdateProfileError] = React.useState('');
-  const [isValidRegister, setIsValidRegister] = React.useState(true);
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
+   
   React.useEffect(() => {
     if (isLoggedIn) {
-      api
+      mainApi
         .getSavedMovies()
         .then((data) => {
           setSavedMovies(data.reverse());
@@ -82,9 +80,48 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  React.useEffect(() => {
+    getBeatMovies();
+  }, []);
+
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth
+        .checkToken(jwt)
+        .then((data) => {
+          if (data) {
+            setIsLoggedIn(true);
+            setCurrentUser(data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err === ERROR401) {
+            console.log('Переданный токен некорректен ');
+          } else if (!jwt) {
+            console.log('Токен не передан или передан не в том формате');
+          }
+          console.log('error 500');
+        });
+    }
+  }, []);
+
+ 
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      const resultArray = JSON.parse(localStorage.getItem('searchResultArray'));
+      if (resultArray) {
+        setSearchResultArray(resultArray);
+        setIsSearching(true);
+      }
+    }
+  }, [isLoggedIn]);
+
   function openMobileMenu() {
     SetIsMobileMenuOpen(true);
   }
+
   function closeMobileMenu() {
     SetIsMobileMenuOpen(false);
   }
@@ -110,8 +147,7 @@ function App() {
 
   function onLogin(email, password) {
     getBeatMovies();
-    auth
-      .login(email, password)
+    auth.login(email, password)
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         setIsLoggedIn(true);
@@ -124,32 +160,6 @@ function App() {
         console.log(err);
       });
   }
-  React.useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((data) => {
-          if (data) {
-            setIsLoggedIn(true);
-            setCurrentUser(data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err === ERROR401) {
-            console.log('Переданный токен некорректен ');
-          } else if (!jwt) {
-            console.log('Токен не передан или передан не в том формате');
-          }
-          console.log('error 500');
-        });
-    }
-  }, []);
-
-  React.useEffect(() => {
-    getBeatMovies();
-  }, []);
 
   function getBeatMovies() {
     getBeatMoviesFromApi()
@@ -207,6 +217,7 @@ function App() {
       setIsLoading(false);
     }, 2000);
   }
+
   function setResult(setState, array) {
     if (setState === setSearchResultArray) {
       setState(array);
@@ -215,6 +226,7 @@ function App() {
       setState(array);
     }
   }
+
   function handleSearch(data, path) {
     if (path === '/movies') {
       getSearchResult(data, beatFilmsArray, setSearchResultArray);
@@ -223,21 +235,11 @@ function App() {
       getSearchResult(data, savedMovies, setSearchResultSavedArray);
     }
   }
-  // PERSIST ++++++++++++++++++++++++++++++++++++
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      const resultArray = JSON.parse(localStorage.getItem('searchResultArray'));
-      if (resultArray) {
-        setSearchResultArray(resultArray);
-        setIsSearching(true);
-      }
-    }
-  }, [isLoggedIn]);
-  // PERSIST ++++++++++++++++++++++++++++++++++++
+
   const handleMovieLike = (movie) => {
     const like = savedMovies.some((i) => i.movieId === movie.id);
     if (!like) {
-      api
+      mainApi
         .saveMovie(movie)
         .then((newMovie) => {
           setSavedMovies([newMovie, ...savedMovies]);
@@ -249,7 +251,7 @@ function App() {
     } else {
       savedMovies.some((i) =>
         i.movieId === movie.id
-          ? api
+          ? mainApi
               .deleteMovie(i._id)
 
               .then((movie) => {
@@ -269,8 +271,9 @@ function App() {
       );
     }
   };
+
   function handleMovieLikeDelete(movie) {
-    api
+    mainApi
       .deleteMovie(movie._id)
       .then((newMovie) => {
         if (newMovie.message === CARDDELETED) {
@@ -286,18 +289,12 @@ function App() {
         console.log(err);
       });
   }
-  function handleChangeProfile(data) {
-    api
-      .updateProfile(data)
-      .then((res) => {
-        if (res) {
-          setCurrentUser({ name: res.name, email: res.email });
 
-          setIsUpdateProfileError('Данные успешно сохранены');
-          setTimeout(() => {
-            setIsUpdateProfileError('');
-          }, 5000);
-        }
+  function handleUpdateProfile(name, email) {
+    mainApi
+      .updateProfile(name, email)
+      .then((user) => {
+          setCurrentUser(user);
       })
       .catch((err) => {
         if (err === ERROR409) {
@@ -306,6 +303,7 @@ function App() {
         console.log(err);
       });
   }
+
   function handleLogOut() {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -322,6 +320,7 @@ function App() {
     setIsRegisterError('');
     setIsUpdateProfileError('');
   }
+
   return (
     <div className="page">
       <div className="page__container">
@@ -362,7 +361,7 @@ function App() {
               path="/profile"
               component={Profile}
               currentUser={currentUser}
-              onChangeProfile={handleChangeProfile}
+              onChangeProfile={handleUpdateProfile}
               onLogOut={handleLogOut}
               isUpdateProfileError={isUpdateProfileError}
             />
