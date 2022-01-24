@@ -78,7 +78,6 @@ class Api {
 }
   
 export const api = new Api({
-  baseUrl: 'localhost://3000',
-  // 'https://domainname.tatkuptsov.nomoredomains.club',
+  baseUrl: 'https://domainname.tatkuptsov.nomoredomains.club',
 });
   

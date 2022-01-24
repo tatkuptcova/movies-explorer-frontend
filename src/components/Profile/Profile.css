@@ -73,12 +73,33 @@
   cursor: pointer;
 }
 
+.profile__form-errors {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #2439F0;
+  text-align: center;
+  font-size: 19px;
+}
+
+.profile__update-errors {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #2439F0;
+  text-align: center;
+  margin: 220px 0 20px;
+  font-size: 19px;
+}
+
 .profile__form-button:hover {
   opacity: 0.7;
 }
 
 .profile__form-button_disabled {
-  color: #777777;
+  color: #2439F0;
   cursor: initial;
 }
 
@@ -88,10 +109,11 @@
 
 .profile__form-button:last-child {
   margin: 0;
+  margin-bottom: 40px;
 }
 
 .profile__form-button_red {
-  color: #ee3465;
+  color: #df0d29;
 }
 
 @media screen and (max-width: 768px) {

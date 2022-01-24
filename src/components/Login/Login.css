@@ -58,16 +58,12 @@
   padding: 0 0 10px 0;
 }
 
-.login__input_color-red {
-  color: #ee3465;
-}
-
 .login__input-error {
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
-  color: #ee3465;
+  color: #2439F0;
   margin: 6px 0 24px;
 }
 
