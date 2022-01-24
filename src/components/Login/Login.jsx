@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 
 function Login({ onLogin, isLoginError }) {
   const [isValidation, setValidation] = React.useState(false);
-
   const form = useForm({ mode: 'onChange' });
   const {
     reset,
@@ -15,6 +14,7 @@ function Login({ onLogin, isLoginError }) {
     handleSubmit,
   } = form;
   const { isValid } = form.formState;
+
   React.useEffect(() => {
     if (isValid) {
       setValidation(true);
@@ -62,7 +62,7 @@ function Login({ onLogin, isLoginError }) {
             Пароль
           </label>
           <input
-            className="login__input login__input_color-red"
+            className="login__input"
             type="password"
             id="login-input-password"
             {...register('password', { required: true, minLength: 3 })}

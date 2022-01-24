@@ -78,7 +78,7 @@ function Register({ onRegister, isAuthError }) {
             Пароль
           </label>
           <input
-            className="register__input register__input_color-red"
+            className="register__input"
             type="password"
             id="register-input-password"
             placeholder="Введите пароль"
