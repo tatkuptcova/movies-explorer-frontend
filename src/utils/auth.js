@@ -22,8 +22,8 @@ export function login(email, password) {
     headers: headers,
     body: JSON.stringify({ email, password }),
   })
-    .then((users) => {
-      return users;
+    .then((data) => {
+      return data;
     })
     .then(getResponse);
 }
