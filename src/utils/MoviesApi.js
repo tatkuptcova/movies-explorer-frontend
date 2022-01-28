@@ -1,4 +1,4 @@
-function getResponseData(res) {
+function getResponse(res) {
   if (!res.ok) {
     return Promise.reject(`Error: ${res.status}`);
   }
@@ -11,5 +11,5 @@ export function getBeatMoviesFromApi() {
       headers: {
           "Content-Type": "application/json",
       },
-  }).then(getResponseData);
+  }).then(getResponse);
 };

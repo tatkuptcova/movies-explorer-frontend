@@ -1,57 +1,41 @@
-// const BASE_URL = 'http://localhost:3000';
 const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club';
+const headers = { 'Content-Type': 'application/json' };
 
-
-const checkResponse = (res) => {
-  if (res.ok) {
-      return res.json();
+function getResponse(res) {
+  if (!res.ok) {
+    return Promise.reject(`Error: ${res.status}`);
   }
-  return Promise.reject(new Error(`Что-то пошло не так ${res.status}`));
+  return res.json();
 }
 
-export const register = (name, email, password)=>{
-  return fetch(`${BASE_URL}/signup`,{
-      method: "POST",
-      headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          "name": name,
-          "email": email,
-          "password": password,
-          })
-  })
-  .then(checkResponse);
+export function register(name, email, password) {
+  return fetch(`${BASE_URL}/signup`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ name, email, password }),
+  }).then(getResponse);
 }
 
-export const login = (email, password)=>{
-  return fetch(`${BASE_URL}/signin`,{
-      method: "POST",
-      headers:{
-          "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-          "email": email,
-          "password": password
-           })
+export function login(email, password) {
+  return fetch(`${BASE_URL}/signin`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ email, password }),
   })
-  .then(checkResponse)
-  .then((data) => {
-      if (data.token){
-          localStorage.setItem('jwt', data.token);
-          return data;
-      }
-  })
+    .then((users) => {
+      return users;
+    })
+    .then(getResponse);
 }
 
-export const checkToken  = (jwt)=>{
-  return fetch(`${BASE_URL}/users/me`,{
-      method: "GET",
-      headers:{
-          "Content-Type":"application/json",
-          "Authorization" : `Bearer ${jwt}`
-      },
+export function checkToken(token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
   })
-  .then(checkResponse);
+    .then((data) => data)
+    .then(getResponse);
 }
