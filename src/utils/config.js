@@ -1,3 +1,4 @@
+const BASE_URL = 'http://localhost:3000';
 const SHORTMOVIETIME = 40;
 const HEADERLOCATION = ['/', '/movies', '/saved-movies', '/profile'];
 const FOOTERLOCATION = ['/', '/movies', '/saved-movies'];
@@ -14,6 +15,7 @@ const DEFAULTRAILER =
 const DEFAULTIMAGE = 'https://api.nomoreparties.co';
 
 export {
+  BASE_URL,
   ERROR409,
   ERROR401,
   FOOTERLOCATION,

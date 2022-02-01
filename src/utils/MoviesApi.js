@@ -6,10 +6,13 @@ function getResponse(res) {
 }
 
 export function getBeatMoviesFromApi() {
-  return fetch("https://api.nomoreparties.co/beatfilm-movies", {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json",
-      },
-  }).then(getResponse);
+  return fetch('https://api.nomoreparties.co/beatfilm-movies', 
+    {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }
+  )
+  .then(getResponse);
 };

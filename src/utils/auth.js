@@ -1,4 +1,4 @@
-const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club';
+import { BASE_URL } from "./config";
 const headers = { 'Content-Type': 'application/json' };
 
 function getResponse(res) {

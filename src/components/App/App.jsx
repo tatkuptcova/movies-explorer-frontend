@@ -49,7 +49,7 @@ function App() {
   );
 
   const [searchResultSavedArray, setSearchResultSavedArray] = React.useState([]);
-  const [isUpdateProfileError, setIsUpdateProfileError] = React.useState('');
+  const [isUpdateUserError, setIsUpdateUserError] = React.useState('');
   const [isSearchSavedError, setIsSearchSavedError] = React.useState('');
   const [isMobileMenuOpen, SetIsMobileMenuOpen] = React.useState(false);
   const [isSearchingSaved, setIsSearchingSaved] = React.useState(false);
@@ -69,7 +69,7 @@ function App() {
   React.useEffect(() => {
     if (isLoggedIn) {
       mainApi
-        .getSavedMovies()
+        .getMovie()
         .then((data) => {
           setSavedMovies(data.reverse());
         })
@@ -240,7 +240,7 @@ function App() {
     const like = savedMovies.some((i) => i.movieId === movie.id);
     if (!like) {
       mainApi
-        .saveMovie(movie)
+        .createMovie(movie)
         .then((newMovie) => {
           setSavedMovies([newMovie, ...savedMovies]);
           setSavedMovieIds([...savedMovieIds, newMovie.movieId]);
@@ -290,15 +290,15 @@ function App() {
       });
   }
 
-  function handleUpdateProfile(name, email) {
+  function handleUpdateUser(name, email) {
     mainApi
-      .updateProfile(name, email)
+      .updateUser(name, email)
       .then((user) => {
           setCurrentUser(user);
       })
       .catch((err) => {
         if (err === ERROR409) {
-          setIsUpdateProfileError(DUBLICATEEMAIL);
+          setIsUpdateUserError(DUBLICATEEMAIL);
         }
         console.log(err);
       });
@@ -318,7 +318,7 @@ function App() {
     setIsLoading(false);
     setIsLoginError('');
     setIsRegisterError('');
-    setIsUpdateProfileError('');
+    setIsUpdateUserError('');
   }
 
   return (
@@ -361,9 +361,9 @@ function App() {
               path="/profile"
               component={Profile}
               currentUser={currentUser}
-              onChangeProfile={handleUpdateProfile}
+              onChangeProfile={handleUpdateUser}
               onLogOut={handleLogOut}
-              isUpdateProfileError={isUpdateProfileError}
+              isUpdateProfileError={isUpdateUserError}
             />
 
             {!isLoggedIn && (
