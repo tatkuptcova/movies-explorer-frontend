@@ -1,9 +1,9 @@
-import './Profile.css';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import './Profile.css';
 
 function Profile(props) {
-  const { currentUser, onChangeProfile, onLogOut, isUpdateProfileError } =
+  const { currentUser, onChangeProfile, onLogOut, isUpdateUserError } =
     props;
   const { name, email } = currentUser;
   const [isValidation, setValidation] = React.useState(false);
@@ -93,7 +93,7 @@ function Profile(props) {
             'Почта должна соответствовать почте'}
         </p>
 
-        <p className="profile__update-errors">{isUpdateProfileError}</p>
+        <p className="profile__update-errors">{isUpdateUserError}</p>
 
         <button
           disabled={!isValidation}

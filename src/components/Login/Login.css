@@ -99,6 +99,15 @@
   padding: 0;
 }
 
+.login__button-error {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 12px;
+  color: #2439F0;
+  margin: 6px 50px 24px;
+}
+
 .login__button:hover {
 opacity: .8;
 }

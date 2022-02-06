@@ -252,7 +252,7 @@ function App() {
       savedMovies.some((i) =>
         i.movieId === movie.id
           ? mainApi
-              .deleteMovie(i._id)
+              .removeMovie(i._id)
 
               .then((movie) => {
                 if (movie.message === CARDDELETED) {
@@ -274,7 +274,7 @@ function App() {
 
   function handleMovieLikeDelete(movie) {
     mainApi
-      .deleteMovie(movie._id)
+      .removeMovie(movie._id)
       .then((newMovie) => {
         if (newMovie.message === CARDDELETED) {
           setSavedMovies((state) =>

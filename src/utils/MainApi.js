@@ -1,3 +1,5 @@
+import { BASE_URL } from "./config";
+
 class MainApi {
   constructor(apiOptions) {
     this._baseUrl = apiOptions.baseUrl;
@@ -66,6 +68,8 @@ class MainApi {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       body: JSON.stringify({
+        nameRU,
+        nameEN,
         movieId,
         country,
         director,
@@ -74,8 +78,6 @@ class MainApi {
         description,
         image,
         trailer,
-        nameRU,
-        nameEN,
         thumbnail,
       }),
       headers: {
@@ -86,7 +88,7 @@ class MainApi {
     ).then(this._getResponse);
   }
 
-  deleteMovie(movieId) {
+  removeMovie(movieId) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, 
       {
         method: 'DELETE',
@@ -101,6 +103,6 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: BASE_URL,
 });
   

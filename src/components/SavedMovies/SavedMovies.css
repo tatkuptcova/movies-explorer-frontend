@@ -1,4 +1,7 @@
 .saved-movies__error {
-    color: red;
-    text-align: center;
+  color: #2439F0;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 21px;
   }
