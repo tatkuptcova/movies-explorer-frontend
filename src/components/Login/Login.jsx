@@ -54,7 +54,8 @@ function Login({ onLogin, isLoginError }) {
             required
           />
           <p className="login__input-error">
-            {errors.email?.type === 'required' && 'Это обязательное поле'}
+            {errors.email?.type === 'required' && 
+              'Это обязательное поле'}
             {errors.email?.type === 'pattern' &&
               'Почта должна соответствовать почте'}
           </p>
