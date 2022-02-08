@@ -44,7 +44,7 @@ function AboutMe() {
             </a>
           </li>
           <li className='about-me__portfolio-link'>
-            <a href='https://domainname.tatkuptcova.nomoredomains.club' rel='noreferrer' target='_blank'>
+            <a href='https://github.com/tatkuptcova/react-mesto-api-full' rel='noreferrer' target='_blank'>
               Одностраничное приложение
             </a>
           </li>
