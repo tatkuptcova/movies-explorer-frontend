@@ -15,6 +15,7 @@ function SavedMovies(props) {
     isSearchingSaved,
     isSearchSavedError,
   } = props;
+  
   return (
     <div className="saved-movies">
       <SearchForm getSearchMovies={getSearchMovies} isLoading={isLoading} />

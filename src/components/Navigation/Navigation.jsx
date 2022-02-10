@@ -1,5 +1,6 @@
 import './Navigation.css';
 import { Link, NavLink } from 'react-router-dom';
+
 function Navigation({ openMobileMenu, isLoggedIn }) {
   return (
     <nav className="nav">

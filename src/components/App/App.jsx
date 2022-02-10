@@ -141,7 +141,9 @@ function App() {
         console.log(err);
         if (err === ERROR409) {
           setIsRegisterError(DUBLICATEEMAIL);
-        } else setIsRegisterError(SERVERERROR);
+        } else {
+          setIsRegisterError(SERVERERROR);
+        }
       });
   }
 

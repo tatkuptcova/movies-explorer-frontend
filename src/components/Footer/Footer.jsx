@@ -1,32 +1,37 @@
-import { useLocation } from "react-router-dom";
-import "./Footer.css";
+import './Footer.css';
 
+// import { Route,/*  Link, */ Switch } from "react-router-dom";
 function Footer() {
-  const curRoute = useLocation().pathname;
-  
-  if (curRoute === "/movies" || curRoute === "/saved-movies" || curRoute === "/") {
-
   return (
-      <footer className='footer'>
-        <p className='footer__annotation'>Учебный проект Яндекс.Практикум х BeatFilm.</p>
-
-        <div className='footer__row'>
-          <p className='footer__date'>@ 2021</p>
-          <ul className='footer__links'>
-            <a href='https://praktikum.yandex.ru/' rel='noreferrer' target='_blank' className='footer__link'>
-              <li>Яндекс.Практикум</li>
-            </a>
-            <a href='https://github.com/torvalds' rel='noreferrer' target='_blank' className='footer__link'>
-              <li>Github</li>
-            </a>
-            <a href='https://ru-ru.facebook.com/zuck' rel='noreferrer' target='_blank' className='footer__link'>
-              <li>Facebook</li>
-            </a>
+    <footer className="footer">
+      <p className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</p>
+      <div className="footer-content">
+        <p className="footer-content__date">&copy; {new Date().getFullYear()}</p>
+        <nav className="footer-navlinks">
+          <ul className="footer-navlinks__items">
+            <li className="footer-navlinks__item">
+              <a className="link-decoration-none" 
+                  rel="noreferrer" 
+                  href='https://praktikum.yandex.ru/' 
+                  target="_blank">Яндекс.Практикум</a>
+            </li>
+            <li className="footer-navlinks__item">
+              <a className="link-decoration-none" 
+                 rel="noreferrer" 
+                 href='https://github.com/torvalds' 
+                 target="_blank">Github</a>
+            </li>
+            <li className="footer-navlinks__item">
+              <a className="link-decoration-none" 
+                 rel="noreferrer" 
+                 href='https://ru-ru.facebook.com/zuck' 
+                 target="_blank">Facebook</a>
+            </li>
           </ul>
-        </div>
-      </footer>
-    );
-  } else return "";
+        </nav>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;
