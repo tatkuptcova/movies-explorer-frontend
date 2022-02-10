@@ -10,8 +10,8 @@ HTML5, CSS, JS, React (Хуки, функциональные компонент
 * npm run init — помогает установить все необходимые зависимости для локального запуска
 * npm run start — запускает проект в режиме разработки
 
-* ##### *[Серверная часть](https://domainname.tatkuptsov.nomoredomains.club/) "Movies"*
-* ##### *[Ссылка на проект](https://domainname.tatkuptsovа.nomoredomains.club/)*
+* ##### *[Серверная часть](https://domainname.tatkuptsov.nomoredomains.club/)*
+* ##### *[Ссылка на проект](https://domainname.tatkuptsova.nomoredomains.club/)*
 
 ## Чеклист
 
