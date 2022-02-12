@@ -106,10 +106,10 @@
   padding: 0;
 }
 
-register__button-error {
+.register__button-error {
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 18px;
   line-height: 12px;
   color: #ee3465;
   margin-top: 221px;

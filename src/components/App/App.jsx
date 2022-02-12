@@ -143,7 +143,7 @@ function App() {
           setIsRegisterError(DUBLICATEEMAIL);
         } else {
           setIsRegisterError(SERVERERROR);
-        }
+        }       
       });
   }
 
@@ -201,6 +201,7 @@ function App() {
     }
     const checkbox = data.checkbox;
     const keyword = data.search.toLowerCase();
+
     const res = array.filter((el) => {
       const nameRU = el.nameRU.toLowerCase();
       const nameEN = el.nameEN.toLowerCase();
@@ -312,6 +313,9 @@ function App() {
       .catch((err) => {
         if (err === ERROR409) {
           setIsUpdateUserError(DUBLICATEEMAIL);
+          setTimeout(() => {
+            setIsUpdateUserError('');
+          }, 5000);
         }
         console.log(err);
       });
