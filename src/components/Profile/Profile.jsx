@@ -16,7 +16,7 @@ function Profile(props) {
     formState: { errors },
     handleSubmit,
   } = form;
-  
+
   const { isValid } = form.formState;
   const defaultValueName = watch('name');
   const defaultValueEmail = watch('email');

@@ -1,4 +1,5 @@
-const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club'
+const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'https://domainname.tatkuptsov.nomoredomains.club';
 const SHORTMOVIETIME = 40;
 const HEADERLOCATION = ['/', '/movies', '/saved-movies', '/profile'];
 const FOOTERLOCATION = ['/', '/movies', '/saved-movies'];

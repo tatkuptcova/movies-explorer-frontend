@@ -301,7 +301,13 @@ function App() {
     mainApi
       .updateUser(name, email)
       .then((user) => {
+        if (user) {
           setCurrentUser(user);
+          setIsUpdateUserError('Данные успешно сохранены');
+          setTimeout(() => {
+            setIsUpdateUserError('');
+          }, 5000);
+        }
       })
       .catch((err) => {
         if (err === ERROR409) {
@@ -370,7 +376,7 @@ function App() {
               currentUser={currentUser}
               onChangeProfile={handleUpdateUser}
               onLogOut={handleLogOut}
-              isUpdateProfileError={isUpdateUserError}
+              isUpdateUserError={isUpdateUserError}
             />
 
             {!isLoggedIn && (
