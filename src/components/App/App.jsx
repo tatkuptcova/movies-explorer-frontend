@@ -390,11 +390,7 @@ function App() {
                   isValidRegister={isValidRegister}
                 />
               </Route>
-            )} else {
-              <Redirect to="/movies" 
-              />
-            }
-            
+            )}
             {!isLoggedIn && (
               <Route path="/signin">
                 <Login onLogin={onLogin} isLoginError={isLoginError} />
