@@ -217,7 +217,6 @@ function App() {
     } else {
       setResult(setArray, res);
     }
-
     setTimeout(function stopPreloader() {
       setIsLoading(false);
     }, 2000);
@@ -391,21 +390,31 @@ function App() {
                   isValidRegister={isValidRegister}
                 />
               </Route>
-            )}
+            )} else {
+              <Redirect to="/movies" 
+              />
+            }
+            
             {!isLoggedIn && (
               <Route path="/signin">
                 <Login onLogin={onLogin} isLoginError={isLoginError} />
               </Route>
-            )}
+            )} else {
+              <Redirect to="/movies" 
+              />
+            }
 
             <Route path="*">
-              <PageNotFound />
+              <PageNotFound/>
             </Route>
+
             <Route path="/">
               {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
             </Route>
           </Switch>
+
           {shouldShowFooter && <Footer />}
+          
           <MobileMenu
             isMobileMenuOpen={isMobileMenuOpen}
             closeMobileMenu={closeMobileMenu}
